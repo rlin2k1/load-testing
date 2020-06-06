@@ -14,8 +14,8 @@ USERNAME = "cs144"
 
 def readPost(locust):
     postid = random.randint(1, 500) # generate a random number from 1 to 500 (include 1 and 500)
-    url_prefix = "/blog/"
-    url_suffix = "%s/%s" % (USERNAME, str(postid))
+    url_prefix = "/blog/%s" % (USERNAME)
+    url_suffix = "/%s" % (str(postid))
     locust.client.get(url_prefix + url_suffix, name = url_prefix)
 
 class MyTaskSet(TaskSet):

@@ -14,7 +14,7 @@ from locust import HttpLocust, TaskSet
 def writePost(locust):
     postid = random.randint(1, 500) # generate a random number from 1 to 500 (include 1 and 500)
     url_prefix = "/editor/post?action=save"
-    url_suffix = "&username=cs144&postid=%s&title=Loading%20Test&body=***Hello%20World!***" % (str(postid)))
+    url_suffix = "&username=cs144&postid=%s&title=Loading%20Test&body=***Hello%20World!***" % (str(postid))
     locust.client.post(url_prefix + url_suffix, name = url_prefix)
 
 class MyTaskSet(TaskSet):

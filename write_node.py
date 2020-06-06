@@ -14,9 +14,9 @@ USERNAME = "cs144"
 
 def writePost(locust):
     postid = random.randint(1, 500) # generate a random number from 1 to 500 (include 1 and 500)
-    url_prefix = "/api"
-    url_suffix = "/%s/%s" % (USERNAME, str(postid)))
-    locust.client.post(url_prefix + url_suffix, ,data={"title":"Loading Test", "body": "***Hello World!***"}, name = url_prefix)
+    url_prefix = "/api/%s" % (USERNAME)
+    url_suffix = "/%s" % (str(postid))
+    locust.client.put(url_prefix + url_suffix, data={"title":"Loading Test", "body": "***Hello World!***"}, name = url_prefix)
 
 class MyTaskSet(TaskSet):
     tasks = [writePost]
