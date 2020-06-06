@@ -1,34 +1,35 @@
-# locust_test.py
-# In python, '#' is used to indicate a comment line.
-"""
-The string within triple-quote is also considered as a comment.
-And the triple-quote can be used for multiline comments.
-DISCLAIMER: This sample doesn't care about whether the use of API is correct.
+""" mixed_tomcat.py
+Simulating a more realistic scenario where some users are reading posts while
+others are writing. In this test, 10% of users are write intensive
+while the remaining 90% are read intensive.
+
+Author(s):
+    Roy Lin
+
+Date Created:
+    June 5th, 2020
 """
 
 import sys, random
 from locust import HttpLocust, TaskSet
 
-def getList(locust):
-    """ define a function in python whose name is getList and the argument is locust """
-    locust.client.get('/api/cs144')
-    locust.client.get('/editor/post?action=list&username=cs144')
+def readPost(locust):
+    postid = random.randint(1, 500) # generate a random number from 1 to 500 (include 1 and 500)
+    url_prefix = "/editor/post?action=open"
+    url_suffix = "&username=cs144&postid=%s" % (str(postid))
+    locust.client.get(url_prefix + url_suffix, name = url_prefix)
 
-def previewPage(locust):
-    """ define a function in python whose name is previewPage and the argument is locust """
-    postid = random.randint(1, 100) # generate a random number from 1 to 100 (include 1 and 100)
-    url_prefix = '/blog/cs144/';
-    locust.client.get(url_prefix + str(postid), name=url_prefix)
+def writePost(locust):
+    postid = random.randint(1, 500) # generate a random number from 1 to 500 (include 1 and 500)
+    url_prefix = "/editor/post?action=save"
+    url_suffix = "&username=cs144&postid=%s&title=Loading%20Test&body=***Hello%20World!***" % (str(postid)))
+    locust.client.post(url_prefix + url_suffix, name = url_prefix)
 
 class MyTaskSet(TaskSet):
-    """ the class MyTaskSet inherits from the class TaskSet, defining the behavior of the user """
-    tasks = {getList: 2, previewPage: 1}
+    tasks = {readPost: 9, writePost: 1}
     def on_start(locust):
         """ on_start is called when a Locust start before any task is scheduled """
-        response = locust.client.post("/login", data={"username":"cs144", "password": "password"})
-        if response.status_code != 200:
-            print("FAIL to start with posting data to server. Make sure that your server is running.")
-            sys.exit();
+        pass
 
 class MyLocust(HttpLocust):
     """ the class MyLocust inherits from the class HttpLocust, representing an HTTP user """
