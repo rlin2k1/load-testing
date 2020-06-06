@@ -16,8 +16,8 @@ from locust import HttpLocust, TaskSet
 def readPost(locust):
     postid = random.randint(1, 500) # generate a random number from 1 to 500 (include 1 and 500)
     url_prefix = "/editor/post?action=open"
-    url_suffix = "&username=cs144&postid="
-    locust.client.get(url_prefix + url_suffix + str(postid), name = url_prefix)
+    url_suffix = "&username=cs144&postid=%s" % (str(postid))
+    locust.client.get(url_prefix + url_suffix, name = url_prefix)
 
 class MyTaskSet(TaskSet):
     tasks = [readPost]
