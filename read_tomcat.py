@@ -1,7 +1,5 @@
 """ read_tomcat.py
 Simulating the scenario where all requests from users are read intensive.
-The user whose name is cs144 would randomly open one of his posts via
-/editor/post?action=open&username=cs144&postid={num}, where {num} is a random postid.
 
 Author(s):
     Roy Lin

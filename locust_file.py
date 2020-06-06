@@ -27,7 +27,7 @@ class MyTaskSet(TaskSet):
         """ on_start is called when a Locust start before any task is scheduled """
         response = locust.client.post("/login", data={"username":"cs144", "password": "password"})
         if response.status_code != 200:
-            print("FAIL to start with posting data to server. Make sure that your server is running.")
+            print("FAIL to start with posting login data to server. Make sure that your server is running.")
             sys.exit();
 
 class MyLocust(HttpLocust):
